@@ -145,7 +145,7 @@ Asegúrate de tener la **Depuración USB** activada.
 
 ---
 
-## 👩‍💻 Autora
+## Creditos
 
 **Fernanda Paredes**  
 Proyecto académico - *Perfulandia SPA*
