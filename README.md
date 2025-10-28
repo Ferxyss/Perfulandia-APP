@@ -103,3 +103,52 @@ app/
     ├── drawable/
     └── mipmap/
 ```
+
+---
+
+## Cómo ejecutar el proyecto (paso a paso)
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/tu-usuario/tu-repo.git
+```
+(También puedes descargar el `.zip` del repositorio y descomprimirlo).
+
+---
+
+### 2. Abrir el proyecto en Android Studio
+- Abre **Android Studio**.  
+- Selecciona **Open...** o **Open an Existing Project**.  
+- Elige la carpeta raíz del proyecto (donde está `settings.gradle` o `build.gradle`).  
+- Android Studio indexará el proyecto automáticamente.
+
+---
+
+### 3. Sincronizar Gradle
+- Si aparece una barra amarilla arriba diciendo **Sync Now**, haz clic.  
+- Espera a que se descarguen las dependencias y no queden errores en la consola de *Build*.
+
+---
+
+### 4. Configurar el dispositivo de prueba
+**Opción A:** Crear un emulador  
+`Device Manager → Create Virtual Device` → selecciona un teléfono y una imagen de sistema Android.  
+
+**Opción B:** Conectar un teléfono físico  
+Asegúrate de tener la **Depuración USB** activada.  
+
+---
+
+### 5. Ejecutar la app
+- Asegúrate de que la configuración de ejecución sea el módulo `app`.  
+- Selecciona el dispositivo/emulador en la barra superior.  
+- Presiona el botón (*Run*).
+
+---
+
+## 👩‍💻 Autora
+
+**Fernanda Paredes**  
+Proyecto académico - *Perfulandia SPA*
+
+---
+
