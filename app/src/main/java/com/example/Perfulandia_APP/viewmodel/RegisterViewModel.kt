@@ -85,7 +85,7 @@ class RegisterViewModel(private val repo: UsuarioRepositorio): ViewModel() {
         clave: String,
         onResult: (Boolean) -> Unit
     ) {
-        // Marcamos que estamos procesando y limpiamos error previo
+        
         state.value = state.value.copy(
             submitting = true,
             generalError = null
@@ -100,7 +100,7 @@ class RegisterViewModel(private val repo: UsuarioRepositorio): ViewModel() {
                     form = state.value.form.copy(
                         nombre = usuarioBD.nombre,
                         correo = usuarioBD.correo,
-                        contrasena = "" // nunca dejamos la clave en memoria visible
+                        contrasena = "" 
                     ),
                     submitting = false,
                     success = true,
