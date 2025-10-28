@@ -19,7 +19,7 @@ Este proyecto forma parte del trabajo académico.
 
 - **Gestión de sesión**
   - Al iniciar sesión se muestra un mensaje de bienvenida con el nombre del usuario.
-  - El usuario puede cerrar sesión desde el menú lateral (“Cerrar sesión”).
+  - El usuario puede cerrar sesión desde el menú lateral (Cerrar sesión).
 
 - **Perfil del usuario**
   - Muestra nombre, correo y estado.
@@ -36,8 +36,8 @@ Este proyecto forma parte del trabajo académico.
 - **Indicadores visuales**
   - Loader tipo barra de progreso lineal en distintas acciones:
     - Al navegar hacia Formulario de Contacto.
-    - Al registrarse (“Creando tu cuenta…”).
-    - Al cerrar sesión (“Cerrando sesión…”).
+    - Al registrarse (Creando tu cuenta).
+    - Al cerrar sesión (Cerrando sesión).
 
 ---
 
