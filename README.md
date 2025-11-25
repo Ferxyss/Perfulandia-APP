@@ -43,7 +43,6 @@ Proyecto académico.
     - Al registrarse (Creando tu cuenta).
     - Al cerrar sesión (Cerrando sesión).
 
----
 
 ## Tecnologías utilizadas
 
@@ -58,7 +57,6 @@ Proyecto académico.
 - **MockK + JUnit5 + Kotest**
 - **Compose UI Test (Instrumented Test)**
 
----
 
 ## Arquitectura
 
@@ -71,7 +69,6 @@ Estructura tipo **MVVM**:
 - `ui/` → Pantallas y temas.
 - `navigation/` → Rutas y navegación de pantallas.
 
----
 
 ## Funcionalidad de Solicitudes
 Se agregó un flujo completo para gestionar solicitudes:
@@ -187,10 +184,11 @@ El backend gestiona solicitudes enviadas desde la app móvil.
 
 ### Endpoints Implementados
 
-**Método** **Ruta**	  **Función**
-POST	`Solicitudes/`	Crea una solicitud
-GET	`Solicitudes/:email`	Lista solicitudes por correo
-DELETE	`Solicitudes/:id`	Elimina una solicitud
+| Método | Ruta | Función |
+|-------|------|---------|
+| POST | `/solicitudes` | Crea una solicitud |
+| GET | `/solicitudes/:correo` | Lista solicitudes por correo |
+| DELETE | `/solicitudes/:id` | Elimina una solicitud |
 
 ---
 
