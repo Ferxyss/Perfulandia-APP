@@ -19,25 +19,21 @@ class RegisterViewModel(private val repo: UsuarioRepositorio): ViewModel() {
     fun actualizarFotoPerfil(uri: String?) {
         fotoPerfilUri.value = uri
     }
-
     fun onNameChange(v: String) {
         state.value = state.value.copy(
             form = state.value.form.copy(nombre = v)
         )
     }
-
     fun onEmailChange(v: String) {
         state.value = state.value.copy(
             form = state.value.form.copy(correo = v)
         )
     }
-
     fun onPasswordChange(v: String) {
         state.value = state.value.copy(
             form = state.value.form.copy(contrasena = v)
         )
     }
-
     fun submit() {
         val errors = validate(state.value.form)
         if (errors.isNotEmpty()) {
@@ -73,7 +69,6 @@ class RegisterViewModel(private val repo: UsuarioRepositorio): ViewModel() {
             }
         }
     }
-
 
     fun resetSession() {
         state.value = RegisterState()

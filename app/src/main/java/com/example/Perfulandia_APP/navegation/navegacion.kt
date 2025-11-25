@@ -14,12 +14,15 @@ import com.example.Perfulandia_APP.ui.screen.PerfilScreen
 import com.example.Perfulandia_APP.ui.screen.SolicitudScreen
 import com.example.Perfulandia_APP.ui.screen.rememberElegirFotoDeGaleriaLauncher
 import com.example.Perfulandia_APP.viewmodel.RegisterViewModel
+import com.example.Perfulandia_APP.viewmodel.SolicitudViewModel
 import com.example.Perfulandia_APP.ui.screen.rememberTomarFotoLauncher
 
 @Composable
 fun Navegacion(
     navController: NavHostController,
-    vm: RegisterViewModel
+    vm: RegisterViewModel,
+    vm2: SolicitudViewModel
+
 ) {
     NavHost(
         navController = navController,
@@ -64,7 +67,8 @@ fun Navegacion(
         composable("contacto") {
             MenuScreen(
                 vm = vm,
-                navController = navController
+                navController = navController,
+                vm2 = vm2
             )
         }
         composable("perfil") {
@@ -84,10 +88,15 @@ fun Navegacion(
                 }
             )
         }
+
         composable("solicitudes") {
+            val correoSesion = vm.state.value.form.correo.trim().lowercase()
+            if (correoSesion.isNotBlank()) {
+                vm2.onCorreoChange(correoSesion)
+            }
             SolicitudScreen(
-                vm = vm,
-                navController = navController
+                navController = navController,
+                vm = vm2
             )
         }
     }

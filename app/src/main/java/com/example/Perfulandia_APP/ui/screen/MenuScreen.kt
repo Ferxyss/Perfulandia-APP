@@ -32,23 +32,22 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.Perfulandia_APP.viewmodel.RegisterViewModel
+import com.example.Perfulandia_APP.viewmodel.SolicitudViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuScreen(
     vm: RegisterViewModel,
-    navController: NavController
+    navController: NavController,
+    vm2: SolicitudViewModel
 ) {
 
     val state by vm.state
     val nombreUsuarioMostrado = state.form.nombre.ifBlank { "Usuario" }
     val correoUsuarioMostrado = state.form.correo.ifBlank { "correo@perfulandia.cl" }
-
-    // estado del drawer y coroutine
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-
     var cerrandoSesion by remember { mutableStateOf(false) }
 
     ModalNavigationDrawer(
@@ -125,7 +124,7 @@ fun MenuScreen(
                     .fillMaxSize()
                     .padding(innerPadding)
             ) {
-                ContactoScreen(vm = vm)
+                ContactoScreen(vm = vm, solicitudVm = vm2)
 
                 if (cerrandoSesion) {
                     Box(
@@ -193,7 +192,6 @@ private fun DrawerContenidoSimple(
                 horizontalArrangement = Arrangement.Start,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // Avatar circular
                 Box(
                     modifier = Modifier
                         .size(48.dp)
@@ -233,7 +231,7 @@ private fun DrawerContenidoSimple(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp)
-                .weight(1f, fill = true) // esto empuja "Cerrar sesión" hacia el fondo
+                .weight(1f, fill = true)
         ) {
             DrawerOpcionItem(
                 icon = Icons.Default.Person,

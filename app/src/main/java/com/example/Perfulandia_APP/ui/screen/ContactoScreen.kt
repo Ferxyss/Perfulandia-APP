@@ -1,5 +1,6 @@
 package com.example.Perfulandia_APP.ui.screen
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,18 +17,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.example.Perfulandia_APP.model.AppDatabase
-import com.example.Perfulandia_APP.repository.SolicitudRepositorio
 import com.example.Perfulandia_APP.ui.theme.Pink80
 import com.example.Perfulandia_APP.ui.theme.SoftWhite
 import com.example.Perfulandia_APP.viewmodel.RegisterViewModel
+import com.example.Perfulandia_APP.viewmodel.SolicitudViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun ContactoScreen(
-    vm: RegisterViewModel
+    vm: RegisterViewModel,
+    solicitudVm: SolicitudViewModel
 ) {
-
     var nombre by remember { mutableStateOf("") }
     var correo by remember { mutableStateOf("") }
     var mensaje by remember { mutableStateOf("") }
@@ -36,9 +36,8 @@ fun ContactoScreen(
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val db = remember { AppDatabase.get(context) }
-    val solicitudRepo = remember { SolicitudRepositorio(db) }
-    val correoSesion = vm.state.value.form.correo
+    val correoSesionRaw = vm.state.value.form.correo
+    val correoSesion = correoSesionRaw.trim().lowercase()
 
     Box(
         modifier = Modifier
@@ -112,29 +111,52 @@ fun ContactoScreen(
                 onClick = {
                     if (cargando) return@Button
                     cargando = true
+
                     scope.launch {
-                        val correoParaGuardar = if (correoSesion.isNotBlank()) {
-                            correoSesion
-                        } else {
-                            correo
+                        try {
+                            val correoUsuarioRaw = if (correoSesion.isNotBlank()) correoSesion else correo
+                            val correoParaGuardar = correoUsuarioRaw.trim().lowercase()
+
+                            if (correoParaGuardar.isBlank()) {
+                                Toast.makeText(context, "Ingresa un correo o inicia sesión", Toast.LENGTH_LONG).show()
+                                cargando = false
+                                return@launch
+                            }
+                            if (mensaje.trim().isBlank()) {
+                                Toast.makeText(context, "Ingresa un mensaje", Toast.LENGTH_LONG).show()
+                                cargando = false
+                                return@launch
+                            }
+
+                            Log.d("CONTACTO", "Creando solicitud: $correoParaGuardar | ${nombre.ifBlank { "Contacto desde app" }} | $mensaje")
+
+                            solicitudVm.crearYRecargar(
+                                correoUsuario = correoParaGuardar,
+                                asunto = nombre.ifBlank { "Contacto desde app" },
+                                mensaje = mensaje
+                            ) { success, err ->
+                                if (success) {
+                                    if (vm.state.value.form.correo.isBlank()) {
+                                        vm.onEmailChange(correoParaGuardar)
+                                    }
+
+                                    Toast.makeText(context, "¡Mensaje enviado!", Toast.LENGTH_LONG).show()
+                                    nombre = ""
+                                    correo = ""
+                                    mensaje = ""
+                                } else {
+                                    val errMsg = err ?: "Error al enviar"
+                                    Log.e("CONTACTO", "Error creando solicitud: $errMsg")
+                                    Toast.makeText(context, "Error: $errMsg", Toast.LENGTH_LONG).show()
+                                }
+                            }
+
+                        } catch (e: Exception) {
+                            Log.e("CONTACTO", "Error creando solicitud (exception)", e)
+                            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                        } finally {
+                            cargando = false
                         }
-
-                        solicitudRepo.crearSolicitud(
-                            correoUsuario = correoParaGuardar,
-                            asunto = nombre.ifBlank { "Contacto desde app" },
-                            mensaje = mensaje
-                        )
-
-                        Toast.makeText(
-                            context,
-                            "¡Mensaje enviado!",
-                            Toast.LENGTH_LONG
-                        ).show()
-
-                        nombre = ""
-                        correo = ""
-                        mensaje = ""
-                        cargando = false
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
