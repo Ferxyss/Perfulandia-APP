@@ -187,7 +187,7 @@ El backend gestiona solicitudes enviadas desde la app móvil.
 
 ### Endpoints Implementados
 
-**Método****Ruta**	  **Función**
+**Método** **Ruta**	  **Función**
 POST	`Solicitudes/`	Crea una solicitud
 GET	`Solicitudes/:email`	Lista solicitudes por correo
 DELETE	`Solicitudes/:id`	Elimina una solicitud
